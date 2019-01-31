@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block headers %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "management.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "management.css" %}" />
+{% endblock %}
+
+
+{% block content %}
+    {% if superuser %}
+        <div class="container">
+            <div class="header">
+                <span>Create new user</span>
+            </div>
+            <div class="collapsible">
+                <form action="/management/create_user/" method="post">
+                {% csrf_token %}
+                {{ createUser.as_p }}
+                <button type="submit">Create user</button>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span>Create new MarBar</span>
+            </div>
+            <div class="collapsible">
+                <form action="/management/create_marbar/" method="post">
+                    {% csrf_token %}
+                    {{ createMarBar.as_p }}
+                    <button type="submit">Create MarBar</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    {%if info %}
+        <ul>
+        {% for m in info %}
+            <li>
+                <div>
+                    <h3>{{ m.marbar }}</h3>
+                    <ul>
+                        {% for score in m.scoreunit %}
+                            <li>
+                                <div>
+                                    <p>{{score.title}}</p>
+                                    <p>{{score.points}}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h2>This user has no MarBar connected to it yet</h2>
+    {% endif %}
+
+{% endblock %}

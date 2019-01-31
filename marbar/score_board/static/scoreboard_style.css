@@ -1,0 +1,48 @@
+
+
+
+
+.column {
+    height: 100%;
+    width: 15%;
+    float: left;
+}
+
+.column_element {
+    margin-left: 25%;
+    margin-right: 10%;
+}
+
+#middle_section {
+    height: 100%;
+    width: 40%;
+    float: left;
+}
+
+#banner_outer{
+    height: 200px;
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    overflow: hidden;
+    border: hidden;
+}
+
+#banner_inner {
+    height: 100%;
+    width: 100%;
+}
+
+#mainGraph {
+    height: 70%;
+    width: 90%;
+}
+
+#col_0_id{
+    height: 15%;
+    width: 90%;
+}
+
+.col_0_class {
+    float: left;
+}

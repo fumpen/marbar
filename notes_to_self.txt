@@ -1,0 +1,10 @@
+
+
+for the graph: http://www.jqplot.com/examples/barTest.php
+
+
+
+test superuser:
+name:test
+mail: test@test.com
+pass: test123

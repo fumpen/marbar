@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block headers %}
+
+
+    <script type="text/javascript" src="{% static "jqplot/jquery.jqplot.js" %}"></script>
+    <script type="text/javascript" src="{% static "jqplot/plugins/jqplot.barRenderer.js" %}"></script>
+    <script type="text/javascript" src="{% static "jqplot/plugins/jqplot.pieRenderer.js" %}"></script>
+    <script type="text/javascript" src="{% static "jqplot/plugins/jqplot.categoryAxisRenderer.js" %}"></script>
+    <script type="text/javascript" src="{% static "jqplot/plugins/jqplot.pointLabels.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "jqplot/jquery.jqplot.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "scoreboard_style.css" %}" />
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="outer_layer">
+        <div class="column" id="col_1">
+            {% if collum_1 %}
+                <ul class="column_element">
+                {% for participant in collum_1 %}
+                    <h1>{{ participant.title }}</h1>
+                    <p id="{{ participant.title }}">{{ participant.points }}</p>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+
+        <div class="column">
+            <div class="col-sm-1" id="col_2">
+            {% if collum_2 %}
+                <ul class="column_element">
+                {% for participant in collum_2 %}
+                    <h1>{{ participant.title }}</h1>
+                    <p id="{{ participant.title }}">{{ participant.points }}</p>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+            </div>
+        </div>
+
+        <div id="middle_section">
+            <div id="banner_outer">
+            <img src="{% static "images/test_image.png"  %}" alt="my image" id="banner_inner">
+            </div>
+
+            <div id="mainGraph">
+            </div>
+
+
+            {% if collum_0 %}
+                <div id="col_0_id">
+                    <ul>
+                    {% for participant in collum_0 %}
+                        <div class="column_element col_0_class">
+                        <h1>{{ participant.title }}</h1>
+                        <p id="{{ participant.title }}">{{ participant.points }}</p>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="col-sm-4">
+                    <p>No polls are available.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="column" id="col_3">
+            {% if collum_3 %}
+                <ul class="column_element">
+                {% for participant in collum_3 %}
+                    <h1>{{ participant.title }}</h1>
+                    <p id="{{ participant.title }}">{{ participant.points }}</p>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+
+        <div class="column" id="col_4">
+            {% if collum_4 %}
+                <ul class="column_element">
+                {% for participant in collum_4 %}
+                    <h1>{{ participant.title }}</h1>
+                    <p id="{{ participant.title }}">{{ participant.points }}</p>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <script id="source" language="javascript" type="text/javascript">
+      $.ajaxSetup({cache: false});
+      $( document ).ready(function() {
+          update_score();
+          update_plot();
+          $.ajaxSetup({ cache: true });
+      });
+
+      function update_score() {
+         $.ajax({
+                    url: "{% url 'score_board:get_points' %}",
+                    data: "",
+                    dataType: 'json',
+                    success: function(res_var) {
+                        res_var.forEach(function(res_item) {
+                            document.getElementById(res_item["title"]).innerHTML = res_item["points"];
+                        }
+                        );
+                    }
+                  }
+                  );
+      }
+      setInterval(update_score, 500);
+
+      function update_plot() {
+         $.ajax({
+                    url: "{% url 'score_board:get_graph' %}",
+                    data: "",
+                    dataType: 'json',
+                    success: function(res_var) {
+                        var s1 = [];
+                        var ticks = [];
+                        res_var.forEach(function(res_item) {
+                            s1.push(res_item.points);
+                            ticks.push(res_item.title);
+                        });
+
+                        $.jqplot.config.enablePlugins = true;
+
+                        plot1 = $.jqplot('mainGraph', [s1], {
+                            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+                            animate: !$.jqplot.use_excanvas,
+                            seriesDefaults:{
+                                renderer:$.jqplot.BarRenderer,
+                                pointLabels: { show: true }
+                            },
+                            axes: {
+                                xaxis: {
+                                    renderer: $.jqplot.CategoryAxisRenderer,
+                                    ticks: ticks
+                                }
+                            },
+                            highlighter: { show: false }
+                        });
+                    }
+                  }
+                  );
+      }
+      setInterval(update_plot, 50000);
+
+
+
+    </script>
+
+{% endblock %}

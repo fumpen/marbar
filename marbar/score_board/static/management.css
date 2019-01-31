@@ -1,0 +1,23 @@
+.container {
+    width:50%;
+    border:2px solid cadetblue;
+    margin-top: 5px;
+
+}
+.container div {
+    width:100%;
+}
+.container .header {
+    width: calc(100% - 4px);
+    background-color:#d3d3d3;
+    padding: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.container .collapsible {
+    display: none;
+    padding : 5px;
+
+}

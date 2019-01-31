@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}RHK MarBar - Log in {% endblock %}
+
+{% block content %}
+    <form action="/management/login_post/" method="post">
+        {% csrf_token %}
+        <label for="username">Your username: </label>
+        <input id="username" type="text" name="username" value="">
+        <label for="password">Your password: </label>
+        <input id="password" type="password" name="password" value="">
+        <input type="submit" value="log in">
+    </form>
+{% endblock %}

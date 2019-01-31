@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}RHK MarBar{% endblock %}</title>
+    <script type="text/javascript" src="{% static "jquery.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "base_style.css" %}" />
+    {% block headers %}
+    {% endblock %}
+</head>
+<body>
+{% if messages %}
+    <ul id="message_box">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <script>
+        setTimeout(function() {
+          $("#message_box").fadeOut().empty();
+        }, 2500);
+    </script>
+{% endif %}
+ <ul id="nav_bar">
+  <li class="nav_bar_elem"><a href={% url "score_board" %}>Score board</a></li>
+  <li class="nav_bar_elem"><a href="/">Events/Calender</a></li>
+  <li class="nav_bar_elem"><a href={% url "management:management_view" %}>Management</a></li>
+  {% if user.is_authenticated %}
+     <li class="nav_bar_elem"><a href={% url "management:logout" %}>Log out</a></li>
+  {% else %}
+     <li class="nav_bar_elem"><a href={% url "management:login_view" %}>Log in</a></li>
+  {% endif %}
+
+</ul>
+<div id="main_content">
+{% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
