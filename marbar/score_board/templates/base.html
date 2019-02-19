@@ -24,9 +24,10 @@
 {% endif %}
  <ul id="nav_bar">
   <li class="nav_bar_elem"><a href={% url "score_board" %}>Score board</a></li>
-  <li class="nav_bar_elem"><a href="/">Events/Calender</a></li>
-  <li class="nav_bar_elem"><a href={% url "management:management_view" %}>Management</a></li>
+  <li class="nav_bar_elem"><a href={% url "management:events" %}>Events</a></li>
   {% if user.is_authenticated %}
+     <li class="nav_bar_elem"><a href={% url "management:management_view" %}>Management</a></li>
+     <li class="nav_bar_elem"><a href={% url "score_board:assign_points" %}>Add Points</a></li>
      <li class="nav_bar_elem"><a href={% url "management:logout" %}>Log out</a></li>
   {% else %}
      <li class="nav_bar_elem"><a href={% url "management:login_view" %}>Log in</a></li>

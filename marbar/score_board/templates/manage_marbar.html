@@ -3,6 +3,11 @@
 {% block headers %}
     {% load static %}
     <script type="text/javascript" src="{% static "jquery.js" %}"></script>
+    <link rel="stylesheet" href="{% static "jQuery-Timepicker/downloaded_jquery-ui_css.css" %}">
+    <script type="text/javascript" src="{% static "jquery-ui/jquery-ui.js" %}"></script>
+    <script type="text/javascript" src="{% static "jQuery-Timepicker/src/jquery-ui-sliderAccess.js" %}"></script>
+    <link rel="stylesheet" href="{% static "jQuery-Timepicker/src/jquery-ui-timepicker-addon.css" %}">
+    <script type="text/javascript" src="{% static "jQuery-Timepicker/src/jquery-ui-timepicker-addon.js" %}"></script>
     <script type="text/javascript" src="{% static "management.js" %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "management.css" %}" />
 {% endblock %}
@@ -35,28 +40,45 @@
             </div>
         </div>
     {% endif %}
-    {%if info %}
+    {%if manageMarbars %}
         <ul>
-        {% for m in info %}
-            <li>
-                <div>
-                    <h3>{{ m.marbar }}</h3>
-                    <ul>
-                        {% for score in m.scoreunit %}
-                            <li>
-                                <div>
-                                    <p>{{score.title}}</p>
-                                    <p>{{score.points}}</p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
+        {% for m in manageMarbars %}
+            <div class="container">
+                <div class="header">
+                    <span>{{ m.title }}</span>
                 </div>
-            </li>
+                <div class="collapsible">
+                    <div class="left_collapsible">
+                        <form action="/management/update_marbar/" method="post">
+                            {% csrf_token %}
+                            {{ m.form.as_p }}
+                            <button type="submit">Update MarBar</button>
+                        </form>
+                    </div>
+                    <div class="right_collapsible">
+                        <div class="upper_right">
+                            <form action="/management/activate_marbar/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="activateMarBar" value="{{ m.pk }}">
+                                <input type="submit" value="activate MarBar">
+                            </form>
+                        </div>
+                        <div class="lower_right">
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
         </ul>
     {% else %}
         <h2>This user has no MarBar connected to it yet</h2>
     {% endif %}
 
+
+
+    <script id="source" language="javascript" type="text/javascript">
+      $( document ).ready(function() {
+       $('#id_end_date').datetimepicker();
+      });
+    </script>
 {% endblock %}

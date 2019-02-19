@@ -11,6 +11,9 @@
 .column_element {
     margin-left: 25%;
     margin-right: 10%;
+    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+
+
 }
 
 #middle_section {
@@ -45,4 +48,8 @@
 
 .col_0_class {
     float: left;
+}
+
+#countdownClock {
+    text-align: center;
 }

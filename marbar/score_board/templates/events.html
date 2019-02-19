@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block headers %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "jquery.js" %}"></script>
+    <link rel="stylesheet" href="{% static "jQuery-Timepicker/downloaded_jquery-ui_css.css" %}">
+    <script type="text/javascript" src="{% static "jquery-ui/jquery-ui.js" %}"></script>
+    <script type="text/javascript" src="{% static "jQuery-Timepicker/src/jquery-ui-sliderAccess.js" %}"></script>
+    <link rel="stylesheet" href="{% static "jQuery-Timepicker/src/jquery-ui-timepicker-addon.css" %}">
+    <script type="text/javascript" src="{% static "jQuery-Timepicker/src/jquery-ui-timepicker-addon.js" %}"></script>
+    <script type="text/javascript" src="{% static "management.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "events.css" %}" />
+{% endblock %}
+
+
+{% block content %}
+
+    {% if event_form %}
+        <div class="container">
+            <div class="header">
+                <span>Add a new event</span>
+            </div>
+            <div class="collapsible">
+                <form action="/management/events/" method="post">
+                    {% csrf_token %}
+                    {{ event_form.as_p }}
+                    <button type="submit">Add event</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    {% if current_events %}
+        <ul class="event_list">
+            {% for e in current_events %}
+                <li class="event_element">
+                <h3>{{ e.title }}</h3>
+                <p>{{ e.info }}</p>
+                <p>Start at: {{ e.start_date }}</p>
+                <p>Ends at: {{ e.end_date }}</p>
+                {% if event_form %}
+                    <form action="/management/delete_event/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="event_pk" value="{{ e.pk }}">
+                    <button type="submit">Delete event</button>
+                </form>
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No events added yet!</h1>
+    {% endif %}
+
+    <script id="source" language="javascript" type="text/javascript">
+      $( document ).ready(function() {
+       $('#id_start_date').datetimepicker();
+       $('#id_end_date').datetimepicker();
+      });
+    </script>
+{% endblock %}

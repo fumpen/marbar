@@ -21,3 +21,21 @@
     padding : 5px;
 
 }
+
+
+.left_collapsible .right_collapsible {
+    float: left;
+}
+
+.left_collapsible {
+
+}
+
+.right_collapsible {
+
+}
+
+
+.upper_right .lower_right {
+
+}

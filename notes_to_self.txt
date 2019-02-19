@@ -1,8 +1,14 @@
-
+https://jqueryui.com/ (v 1.12.1)
+https://www.jqueryscript.net/time-clock/Time-Picker-jQuery-UI-Datepicker.html
 
 for the graph: http://www.jqplot.com/examples/barTest.php
 
 
+reset db and create testuser:
+
+      * delete db.sqlite
+      * python manage.py migrate (recreates both db file and tabels in it)
+      * python manage.py createsuperuser
 
 test superuser:
 name:test

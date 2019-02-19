@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block headers %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "management.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "assign_points.css" %}" />
+{% endblock %}
+
+
+{% block content %}
+    <ul class="score_row">
+        {% for su in collum_1 %}
+            <li class="score_row_elem">
+                <button class="point_button" type="submit" value="{{ su.pk }}">{{ su.title }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="score_row">
+        {% for su in collum_2 %}
+            <li class="score_row_elem">
+                <button class="point_button" type="submit" value="{{ su.pk }}">{{ su.title }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="score_row">
+        {% for su in collum_3 %}
+            <li class="score_row_elem">
+                <button class="point_button" type="submit" value="{{ su.pk }}">{{ su.title }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="score_row">
+        {% for su in collum_4 %}
+            <li class="score_row_elem">
+                <button class="point_button" type="submit" value="{{ su.pk }}">{{ su.title }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="score_row">
+        {% for su in collum_0 %}
+            <li class="score_row_elem">
+                <button class="point_button" type="submit" value="{{ su.pk }}">{{ su.title }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <input type="text" id="points_awarded">
+
+
+    <script>
+    $( document ).ready(function() {
+        $(".point_button").on("click", function (){
+            var clickedBtnPK = $(this).attr("value");
+            var valueToCommit = $("#points_awarded").val();
+            $("#points_awarded").val("");
+            $.post("{% url 'score_board:assign_points' %}", {"csrfmiddlewaretoken":"{{ csrf_token }}",
+                    "scoreUnitPk":clickedBtnPK, "scoreUnitValue":valueToCommit}, function() {
+                        document.getElementById("points_awarded").innerHTML = "";}
+                    );
+                })
+            });
+    </script>
+{% endblock %}

@@ -1,0 +1,11 @@
+.score_row {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #D3D3D3;
+}
+
+.score_row_elem {
+    float: left;
+}
